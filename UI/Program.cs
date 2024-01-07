@@ -9,15 +9,23 @@ namespace UI
     {
         static void Main(string[] args)
         {
-            // Carrega a lista de usuários diretamente do arquivo usando o Manipulador
-            List<Usuario> lista = Manipulador<Usuario>.CarregarLista();
-
-            foreach (var item in lista)
+            Console.WriteLine("Usuario: ");
+            int usuario = int.Parse(Console.ReadLine());
+            Console.WriteLine("Senha: ");
+            string senha = Console.ReadLine();
+            Usuario usuarioLogado = AutenticacaoUsuario.Autenticar(usuario, senha);
+            if (usuarioLogado.nivelAcesso == NivelAcesso.TechLeader)
             {
-                Console.WriteLine(item.nome);
+                MenuTechLeader.Menu((TechLeader)usuarioLogado);
             }
-
-            // Restante do seu código...
+            if (usuarioLogado.nivelAcesso == NivelAcesso.Desenvolvedor)
+            {
+                MenuDesenvolvedor.Menu((Desenvolvedor)usuarioLogado);
+            }
+            else
+            {
+                Console.WriteLine("Usuário ou senha inválidos");
+            }
         }
     }
 }
